@@ -13,7 +13,7 @@ class TestRRRCQ(TestCase):
     def test_should_return_error_when_trying_to_rotate_queue_before_setting_it(self):
         rrcq = RedisReadyCircularQueue(host=self.host, port=self.port)
         rrcq.unset_queue()
-        self.assertRaises(ConnectionError, rrcq.rotate_left)
+        self.assertRaises(ConnectionError, rrcq.rotate_right)
 
     def test_should_return_true_when_instantiating_rrcq_object(self):
         rrcq = RedisReadyCircularQueue(host=self.host, port=self.port)
@@ -34,20 +34,20 @@ class TestRRRCQ(TestCase):
     def test_should_return_next_element_in_queue(self):
         rrcq = RedisReadyCircularQueue(host=self.host, port=self.port)
         rrcq.set_new_queue(self.queue, self.pointer)
-        next = rrcq.rotate_left()
+        next = rrcq.rotate_right()
         self.assertEqual(next, 'Banana')
 
     def test_should_return_previous_element_in_queue(self):
         rrcq = RedisReadyCircularQueue(host=self.host, port=self.port)
         rrcq.set_new_queue(self.queue, self.pointer)
-        next = rrcq.rotate_right()
+        next = rrcq.rotate_left()
         self.assertEqual(next, 'Avocado')
 
     def test_should_return_previous_element_in_queue_when_pointer_is_at_0_position(self):
         self.pointer = 'Banana'
         rrcq = RedisReadyCircularQueue(host=self.host, port=self.port)
         rrcq.set_new_queue(self.queue, self.pointer)
-        next = rrcq.rotate_right()
+        next = rrcq.rotate_left()
         self.assertEqual(next, 'Watermelon')
 
 

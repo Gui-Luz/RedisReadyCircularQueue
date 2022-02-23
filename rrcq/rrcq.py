@@ -19,7 +19,7 @@ class RedisReadyCircularQueue:
         self._unset_queue()
         self._unset_pointer()
 
-    def rotate_left(self):
+    def rotate_right(self):
         queue = self._get_redis_queue_value()
         pointer = self._get_redis_pointer_value()
         circular_queue = CircularQueue(queue, pointer)
@@ -27,7 +27,7 @@ class RedisReadyCircularQueue:
         self._set_pointer(next_element)
         return next_element
 
-    def rotate_right(self):
+    def rotate_left(self):
         queue = self._get_redis_queue_value()
         pointer = self._get_redis_pointer_value()
         circular_queue = CircularQueue(queue, pointer)

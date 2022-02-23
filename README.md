@@ -24,14 +24,15 @@ queue = ['Banana', 'Star Fruit', 'Apple', 'Orange', 'Avocado']
 pointer = 'Apple'
 rrcq.set_new_queue(queue, pointer)
 ```
-Then you can simply call rotate_left, to get next element, or rotate_right, to get previous element in queue:
+Then you can simply call rotate_right, to get next element, or rotate_left, to get previous element in queue:
+
 ```python
+rrcq.rotate_right()
+>> > 'Orange'
+rrcq.rotate_right()
+>> > 'Avocado'
+rrcq.rotate_right()
+>> > 'Banana'
 rrcq.rotate_left()
->>>'Orange'
-rrcq.rotate_left()
->>>'Avocado'
-rrcq.rotate_left()
->>>'Banana'
-rrcq.rotate_left()
->>>'Avocado'
+>> > 'Avocado'
 ```

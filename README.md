@@ -10,7 +10,7 @@ git clone https://github.com/Gui-Luz/RedisReadyCircularQueue.git
 ##### How to use
 After cloning the repo, you can import the **ReadisReadyCircularQueue** class to your project:
 ```python
-from rrcq import RedisReadyCircularQueue
+from rrcq.rrcq import RedisReadyCircularQueue
 ```
 You can instantiate the **RedisReadyCircularQueue** object passing a Redis **host** an a **port** as arguments:
 ```python

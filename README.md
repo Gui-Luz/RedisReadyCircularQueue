@@ -36,3 +36,21 @@ rrcq.rotate_right()
 rrcq.rotate_left()
 >> > 'Avocado'
 ```
+If you need to get a batch of elements, let's say to deliver it to a multi-thread routine, you can call the get_batch method like so:
+```python
+queue = ['Banana', 'Star Fruit', 'Apple', 'Orange', 'Avocado']
+pointer = 'Banana'
+batch_size = 2
+rrcq.set_new_queue(queue, pointer)
+mybatch = rrcqw.get_batch(batch_size)
+>>> ['Star Fruit', 'Apple']
+```
+If you need to get a batch rotating the queue to the left, you simply pass 'left' as a rotation argument:
+```python
+queue = ['Banana', 'Star Fruit', 'Apple', 'Orange', 'Avocado']
+pointer = 'Banana'
+batch_size = 2
+rrcq.set_new_queue(queue, pointer)
+mybatch = rrcqw.get_batch(batch_size, rotation='left')
+>>> ['Avocado', 'Orange']
+```

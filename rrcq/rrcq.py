@@ -20,20 +20,36 @@ class RedisReadyCircularQueue:
         self._unset_pointer()
 
     def rotate_right(self):
-        queue = self._get_redis_queue_value()
-        pointer = self._get_redis_pointer_value()
+        queue, pointer = self._get_redis_queue_and_pointer_values()
         circular_queue = CircularQueue(queue, pointer)
         next_element = circular_queue.get_next_element()
         self._set_pointer(next_element)
         return next_element
 
     def rotate_left(self):
-        queue = self._get_redis_queue_value()
-        pointer = self._get_redis_pointer_value()
+        queue, pointer = self._get_redis_queue_and_pointer_values()
         circular_queue = CircularQueue(queue, pointer)
         previous_element = circular_queue.get_previous_element()
         self._set_pointer(previous_element)
         return previous_element
+
+    def get_batch(self, batch_size, rotation='right'):
+        retrieved_elements = []
+        for i in range(0, batch_size):
+            if rotation == 'right':
+                element = self.rotate_right()
+                retrieved_elements.append(element)
+            elif rotation == 'left':
+                element = self.rotate_left()
+                retrieved_elements.append(element)
+            else:
+                raise AttributeError('An invalid rotation was provided. Please use left or right rotation.')
+        return retrieved_elements
+
+    def _get_redis_queue_and_pointer_values(self):
+        queue = self._get_redis_queue_value()
+        pointer = self._get_redis_pointer_value()
+        return queue, pointer
 
     def _get_redis_queue_value(self):
         redis_client = self._connect_to_redis()

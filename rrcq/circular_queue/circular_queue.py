@@ -38,3 +38,16 @@ class CircularQueue:
             previous_element = self.queue[self.pointer - 1]
             self.pointer -= 1
             return previous_element
+
+    def get_batch(self, batch_size, rotation='right'):
+        retrieved_elements = []
+        for i in range(0, batch_size):
+            if rotation == 'right':
+                element = self.get_next_element()
+                retrieved_elements.append(element)
+            elif rotation == 'left':
+                element = self.get_previous_element()
+                retrieved_elements.append(element)
+            else:
+                raise AttributeError('An invalid rotation was provided. Please use left or right rotation.')
+        return retrieved_elements

@@ -50,4 +50,30 @@ class TestRRRCQ(TestCase):
         next = rrcq.rotate_left()
         self.assertEqual(next, 'Watermelon')
 
+    def test_should_return_next_two_elements_when_calling_get_batch_method(self):
+        self.pointer = 'Banana'
+        rrcq = RedisReadyCircularQueue(host=self.host, port=self.port)
+        rrcq.set_new_queue(self.queue, self.pointer)
+        mybatch = rrcq.get_batch(2)
+        self.assertEqual(['Star Fruit', 'Apple'], mybatch)
 
+    def test_should_return_previous_two_elements_when_calling_get_batch_method_with_rotation_left(self):
+        self.pointer = 'Banana'
+        rrcq = RedisReadyCircularQueue(host=self.host, port=self.port)
+        rrcq.set_new_queue(self.queue, self.pointer)
+        mybatch = rrcq.get_batch(2, rotation='left')
+        self.assertEqual(['Watermelon', 'Avocado'], mybatch)
+
+    def test_should_return_attribute_error_when_calling_get_batch_method_with_invalid_rotation(self):
+        self.pointer = 'Banana'
+        rrcq = RedisReadyCircularQueue(host=self.host, port=self.port)
+        rrcq.set_new_queue(self.queue, self.pointer)
+        self.assertRaises(AttributeError, rrcq.get_batch, 2, rotation='center')
+
+    def test_should_return_next_when_get_next_element_function_after_a_get_batch_function(self):
+        self.pointer = 'Banana'
+        rrcq = RedisReadyCircularQueue(host=self.host, port=self.port)
+        rrcq.set_new_queue(self.queue, self.pointer)
+        rrcq.get_batch(2, rotation='left')
+        previous = rrcq.rotate_left()
+        self.assertEqual('Orange', previous)
